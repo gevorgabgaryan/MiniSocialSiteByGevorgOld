@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<body>
+    <div class="container">
+        <h2>Login</h2>
+     <div class="row justify-content-md-center" style="margin-top: 100px">
+    <div class="col-md-6">
+         
+        <%        if(message){ %>
+                <h1 class="text-danger">     <%= message %>
+        <% } %>
+
+        <form method="POST" action="/auth/login" id="loginForm">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <p>
+                <p>Register? <a href="/auth/register">Register now</a>.</p>
+            </p>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
+</div>
+<script src="/javascripts/main.js" ></script>
+
+</body>

@@ -1,0 +1,111 @@
+<%- include ./components/header %>
+<script src="/javascripts/components/index.js"></script>
+<div class="container-fluid text-center bg-secondary py-5">
+  <div class="row">
+      <div class="col-md-6 pt-5">
+             <p hidden id="userId"><%= userId%></p>
+            <h1><%=  userInfo.username %></h1>
+
+                <img src="/images/<%= userInfo.image  %>" id="homeImg" width="200" height="200">
+                <p>
+                  <button id="editImageBtn">Change Photo</button>  
+                </p>
+                <section id="editImage" hidden >
+                  <input type="file" name="file" id="imageFile"> 
+                  <p>
+                     <input type="button" value="Save" id="changeBtn"> 
+                     <input type="button" value="Cancel" id="cancelChangeBtn">
+                  </p> 
+                  
+                </section>
+        
+            <section class="py-3" id="userDetails" >
+                <% if(userInfo._id==userId){ %> 
+                    <button class="btn btn-primary btn-sm rounded-0 editProfile" >
+                    Add detail or  Edit Profile
+                        <i class="fa fa-table"></i>
+            </button>
+                
+                <% } %>
+      </div>
+      <div class="col-md-6 pt-5">
+                  <% for(let key in userInfo){ %>
+                        <% if(key=="firstname" || key=="lastname"|| key=="phone" || key=="workplace" ||key=="education" || key=="city" ){        %>
+                                        <p ><%= key %> <b id="<%=key %>"><%= userInfo[key] %> </b></p>
+                        <% } %>
+                
+                
+                    <% } %>
+      </div>
+  </div>
+    
+           
+          
+            
+           
+      
+     </section>   
+        
+     </p>
+</div>
+<% if(userInfo._id==userId){ %>
+<div class="container-fluid text-center">
+    <div class="row">
+        <div class="col-md-3" id="friendsContainer">
+            <h6>Friends</h6>
+            <% for(let user of userInfo.friends){ %>
+                <section class="m-3">
+                    <p><img src="/images/<%= user.image  %>" width="50" height="50">
+                    <%= user.username %></p>
+                    <p>
+                        <button id="<%=  user._id %>" class="btn btn-primary m-1 deleteFriendButton">DeleteFriend</button>
+                        <a href="/profile/<%= user._id %>" ><button class="btn btn-primary m-1">View Profile</button></a>
+                    </p>
+                </section>
+               
+        
+            <% } %>
+
+        </div>
+        <div class="col-md-9" id="myPost">
+            <h6>Posts</h6>
+            <form action="" id="postForm">
+                <textarea name="" id="" cols="30" rows="4" class="form-controller">
+ 
+                </textarea>
+                <input type="hidden" value="<%=  userInfo._id %>" name="userId">
+                <input type="hidden" value="<%=  userInfo.username %>" name="username">
+                <p>
+                   <input type="submit" value="Add post"> 
+                </p>
+                
+            </form>
+ 
+            
+                 
+                 
+           
+           
+ 
+            </textarea>
+            <main>
+                <% posts.forEach(post=>{ %>
+                 <p style="font-size: 40px;" id="<%= post._id %>"><%= post.post %></p>
+                <h1><img src="/images/<%= post.author.image  %>" id="homeImg" width="50" height="50">
+                 <%= post.author.username %></h1>
+                 <p><%= post.updatedAt %></p>
+                 
+                 <% }) %>
+            </main>
+     
+        </div>
+       
+           
+    </div>
+</div>
+<% } %>
+<script src="/javascripts/profile.js"></script>
+
+
+
+
