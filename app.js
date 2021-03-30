@@ -21,13 +21,6 @@ mongoose.connect(process.env.mongoLink,{
   useCreateIndex:true,
 
 })
-const db=mongoose.connection
-db.on("error", (err)=>{
-  console.log(err)
-})
-db.on("connected",()=>{
-  console.log("connected")
-})
 
 const PostModel=require("./models/PostModel")
 
@@ -51,8 +44,7 @@ io.on("connection",(socket)=>{
       user.status.online=true
       user.status.socketId=socket.id
       await user.save()
-      socket.userId=userId
-      
+      socket.userId=userId      
       socket.broadcast.emit("new user", user)
     }catch(err){
       io.to(socket.id).emit("error", {error:err.message})
@@ -64,17 +56,18 @@ io.on("connection",(socket)=>{
 
 socket.on("disconnect",async ()=>{
   try{
-    
+
     let user=await UserModel.findOne({_id:socket.userId})
     if(user){
     
         user.status.online=false
         await user.save()
-        socket.emit("user disconnected", socket.userId)
+        socket.broadcast.emit("user disconnected", user._id)
+       
        }
       
   }catch(err){
-    console.log(err)
+    io.to(socket.userId).emit("error",{error:err.message})
   }  
  
 })
@@ -86,7 +79,7 @@ socket.on("logOut",async(userId)=>{
     
          
   }catch(err){
-    console.log(err)
+    io.to(userId).emit("error",{error:err.message})
 
   }  
  
@@ -137,12 +130,12 @@ try{
    if(userSender.status.online){
       io.to(userSender.status.socketId).emit("confirmRequest",userAccepter)
     } 
-    console.log(userAccepter.status.socketId)
+  
    io.to(userAccepter.status.socketId).emit("requestAccepeted", data.senderRequest)
 
    
   }catch(err){
-      console.log(err)
+     
       io.to(userAccepter.status.socketId).emit("error",{error:err.message})
   }
  
@@ -177,8 +170,8 @@ socket.on("private message",async (data)=>{
          io.to(userTo.status.socketId).emit("private message",objMsg)
        }
       }catch(err){
-        console.log(err)
-        io.to(userFrom.status.socketId).emit({error:err.message})
+          if(data.from)
+              io.to(data.from).emit({error:err.message})
 
       }
 })      

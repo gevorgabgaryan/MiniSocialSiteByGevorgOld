@@ -18,9 +18,9 @@
             <section class="m-3" >
                 <p><img src="/images/<%= user.image  %>" width="50" height="50">
                 <%= user.username %></p>
-                <p  class='<%=  user._id %>'>
-                    <button id="<%=  user._id %>" class="btn btn-primary m-1 confirmButton">Confirm</button>
-                    <button id="<%=  user._id %>"  class="btn btn-primary m-1">Cancel</button>
+                <p  class='request<%=  user._id %>'>
+                    <button id="r_<%=  user._id %>" class="btn btn-primary m-1 confirmButton">Confirm</button>
+                    <button id="r_<%=  user._id %>"  class="btn btn-primary m-1 cancelRequestButton">Cancel</button>
                 </p>
             </section>
            
@@ -89,7 +89,7 @@
                 <section id="private_messages_block" ></section>
                 <main id="onlinesContainer">
                       <% for(let oneUser of  onlineUsers){ %>
-                <section class="onlineUser" id="<%=oneUser._id  %>">
+                <section class="onlineUser" id="o_<%=oneUser._id  %>">
                         <img src="/images/<%=oneUser.image  %>" class="onlineUserImage">
                         <img src="/images/circle.gif"  class="onlineUserIcon">
                         <span><%= oneUser .username %></span> 

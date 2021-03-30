@@ -36,11 +36,11 @@ function  friendRequestComponent(user){
 //this function is adding online user
 const addNewUser=(user)=>{
 
-     if(!!document.getElementById(user._id)){
-               return
+     if(!!onlinesContainer.querySelector(`#o_${user._id}`)){
+                   return
    }
      
-    onlinesContainer.insertAdjacentHTML("afterbegin",`<section class="onlineUser" id="${user._id }">
+    onlinesContainer.insertAdjacentHTML("afterbegin",`<section class="onlineUser" id="o_${user._id }">
     <img src="/images/${user.image }" class="onlineUserImage">
     <img src="/images/circle.gif"  class="onlineUserIcon">
     ${ user .username}</p>

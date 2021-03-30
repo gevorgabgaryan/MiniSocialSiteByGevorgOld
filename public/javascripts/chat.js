@@ -11,7 +11,6 @@ newUser()
 //others see new user join
 socket.on("new user",(data)=>{
     //components/index addNewUser function
-
     addNewUser(data)
  
 })
@@ -20,8 +19,7 @@ socket.on("new user",(data)=>{
 //leave user
 
 socket.on("user disconnected", function (userId) {
-    document.getElementById(`${userId}`).remove();
-
+      onlinesContainer.querySelector(`#o_${userId}`).remove();
   });
 
 
@@ -54,8 +52,8 @@ socket.on("new post",(data)=>{
 
   onlinesContainer.addEventListener("click",(e)=>{
        if(e.target.className=="onlineUser" || e.target.closest('.onlineUser')){            
-                let id=e.target.id || e.target.closest('.onlineUser').id
-                let name=e.target.textContent.trim() || e.target.closest('.onlineUser').textContent.trim()
+                let id=e.target.id.slice(2) || e.target.closest('.onlineUser').id.slice(2)
+                data.from   let name=e.target.textContent.trim() || e.target.closest('.onlineUser').textContent.trim()
                 privateMessageContainer(id,name,userHomeId)
                 let privateObj={
                     from:userHomeId,
@@ -164,7 +162,6 @@ nonFriendUsersContainer.addEventListener("click",(e)=>{
 socket.on("friend request",(data)=>{
     let {username}=data
     minuteNotifyer('New Frien Request',`Freind request send ${username}`)
-    console.log("d",data)
     oneFreindReuest(data)
 
   })
