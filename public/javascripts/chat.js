@@ -53,7 +53,7 @@ socket.on("new post",(data)=>{
   onlinesContainer.addEventListener("click",(e)=>{
        if(e.target.className=="onlineUser" || e.target.closest('.onlineUser')){            
                 let id=e.target.id.slice(2) || e.target.closest('.onlineUser').id.slice(2)
-                data.from   let name=e.target.textContent.trim() || e.target.closest('.onlineUser').textContent.trim()
+                let name=e.target.textContent.trim() || e.target.closest('.onlineUser').textContent.trim()
                 privateMessageContainer(id,name,userHomeId)
                 let privateObj={
                     from:userHomeId,
